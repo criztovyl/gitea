@@ -92,9 +92,7 @@ var (
 // User represents the object of individual and member of organization.
 type User struct {
 	ID        int64  `xorm:"pk autoincr"`
-	LowerName string `xorm:"UNIQUE NOT NULL"`
-	Name      string `xorm:"UNIQUE NOT NULL"`
-	FullName  string
+
 	// Email is the primary email address (to be used for communication)
 	Email                        string `xorm:"NOT NULL"`
 	KeepEmailPrivate             bool
@@ -109,7 +107,6 @@ type User struct {
 	LoginType   LoginType
 	LoginSource int64 `xorm:"NOT NULL DEFAULT 0"`
 	LoginName   string
-	Type        UserType
 	OwnedOrgs   []*User       `xorm:"-"`
 	Orgs        []*User       `xorm:"-"`
 	Repos       []*Repository `xorm:"-"`
@@ -137,11 +134,6 @@ type User struct {
 	AllowCreateOrganization bool `xorm:"DEFAULT true"`
 	ProhibitLogin           bool `xorm:"NOT NULL DEFAULT false"`
 
-	// Avatar
-	Avatar          string `xorm:"VARCHAR(2048) NOT NULL"`
-	AvatarEmail     string `xorm:"NOT NULL"`
-	UseCustomAvatar bool
-
 	// Counters
 	NumFollowers int
 	NumFollowing int `xorm:"NOT NULL DEFAULT 0"`
@@ -154,12 +146,31 @@ type User struct {
 	Teams                     []*Team             `xorm:"-"`
 	Members                   UserList            `xorm:"-"`
 	MembersIsPublic           map[int64]bool      `xorm:"-"`
-	Visibility                structs.VisibleType `xorm:"NOT NULL DEFAULT 0"`
 	RepoAdminChangeTeamAccess bool                `xorm:"NOT NULL DEFAULT false"`
 
 	// Preferences
 	DiffViewStyle string `xorm:"NOT NULL DEFAULT ''"`
 	Theme         string `xorm:"NOT NULL DEFAULT ''"`
+
+	IdentityId   int64 `xorm:"NOT NULL DEFAULT 0"`
+	Identity     Identity
+
+	// All attributes below have been moved to Identity and are loaded from there
+	// until everything is adjusted
+
+	LowerName string `xorm:"-"`
+	Name      string `xorm:"-"`
+	FullName  string `xorm:"-"`
+
+	Type        UserType      `xorm:"-"`
+
+	// Avatar
+	Avatar          string `xorm:"-"`
+	AvatarEmail     string `xorm:"-"`
+	UseCustomAvatar bool   `xorm:"-"`
+
+	Visibility                structs.VisibleType `xorm:"-"`
+
 }
 
 // ColorFormat writes a colored string to identify this struct
@@ -197,6 +208,14 @@ func (u *User) AfterLoad() {
 	if u.Theme == "" {
 		u.Theme = setting.UI.DefaultTheme
 	}
+
+	u.LowerName = u.Identity.LowerUserName
+	u.Name = u.Identity.UserName
+	u.FullName = u.Identity.DisplayName
+	u.Type = u.Identity.Type
+	u.Avatar = u.Identity.Avatar
+	u.AvatarEmail = u.Identity.AvatarEmail
+	u.UseCustomAvatar = u.Identity.UseCustomAvatar
 }
 
 // SetLastLogin set time to last login
