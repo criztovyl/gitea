@@ -45,8 +45,13 @@ func runPR() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	setting.SetCustomPathAndConf("", "", "")
 	setting.NewContext()
+
+	logCfg := setting.Cfg.Section("log.console")
+	logCfg.NewKey("LEVEL", "Debug")
+	logCfg.NewKey("FLAGS", "date,time,longfile,shortfuncname,levelinitial")
 
 	setting.RepoRootPath, err = ioutil.TempDir(os.TempDir(), "repos")
 	if err != nil {
