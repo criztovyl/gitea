@@ -1,37 +1,58 @@
 package migrations
 
 import (
-	"code.gitea.io/gitea/models"
-	"code.gitea.io/gitea/modules/structs"
-
 	"xorm.io/xorm"
 )
 
 func addUserIdentityTable(x *xorm.Engine) error {
-	type User struct {
 
-		IdentityId   int64 `xorm:"NOT NULL DEFAULT 0"`
-		Identity     models.Identity
+	type Identity struct {
+		ID				int64	`xorm:"pk autoincr"`
 
-		LowerName string `xorm:"-"`
-		Name      string `xorm:"-"`
-		FullName  string `xorm:"-"`
+		// combined unique index to allow empty IRI (= local
+		// user) and keep the IRI still unique
+		IRI				string	`xorm:"UNIQUE(identity)"`
+		UserName		string	`xorm:"UNIQUE(identity) NOT NULL"`
+		LowerUserName	string	`xorm:"UNIQUE(identity) NOT NULL"`
+		DisplayName		string
 
-		Type        models.UserType      `xorm:"-"`
+		Type			int // originally UserType
 
 		// Avatar
-		Avatar          string `xorm:"-"`
-		AvatarEmail     string `xorm:"-"`
-		UseCustomAvatar bool   `xorm:"-"`
+		Avatar			string	`xorm:"VARCHAR(2048) NOT NULL"`
+		AvatarEmail		string	`xorm:"NOT NULL"`
+		UseCustomAvatar	bool
 
-		Visibility                structs.VisibleType `xorm:"-"`
+		Visibility		int		`xorm:"NOT NULL DEFAULT 0"` // originally VisibleType
 	}
 
-	err := x.Sync2(new(models.Identity))
+	type User struct {
+
+		IdentityId		int64 `xorm:"NOT NULL DEFAULT 0"`
+		Identity		Identity
+
+		LowerName		string	`xorm:"-"`
+		Name			string	`xorm:"-"`
+		FullName		string	`xorm:"-"`
+
+		Type			int		`xorm:"-"`
+
+		// Avatar
+		Avatar			string	`xorm:"-"`
+		AvatarEmail		string	`xorm:"-"`
+		UseCustomAvatar	bool	`xorm:"-"`
+
+		Visibility		int		`xorm:"-"`
+	}
+
+	err := x.Sync2(new(Identity))
 	if err != nil {
 		return err
 	}
 
-	err = x.Sync2(new(User))
-	return err
+	sess := x.NewSession()
+	defer sess.Close()
+
+	return dropTableColumns(sess, "user", "lower_name", "name", "full_name", "type", "avatar", "avatar_email", "use_custom_avatar", "visibility")
+
 }
