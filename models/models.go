@@ -57,6 +57,7 @@ var (
 func init() {
 	tables = append(tables,
 		new(User),
+		new(Identity),
 		new(PublicKey),
 		new(AccessToken),
 		new(Repository),
