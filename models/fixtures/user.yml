@@ -2,6 +2,8 @@
 
 - # NOTE: this user (id=1) is the admin
   id: 1
+  identity_id: 1
+  lower_name: user1
   email: user1@example.com
   email_notifications_preference: enabled
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
@@ -12,6 +14,8 @@
 
 -
   id: 2
+  identity_id: 2
+  lower_name: user2
   email: user2@example.com
   keep_email_private: true
   email_notifications_preference: enabled
@@ -26,6 +30,8 @@
 
 -
   id: 3
+  identity_id: 3
+  lower_name: user3
   email: user3@example.com
   email_notifications_preference: onmention
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
@@ -37,6 +43,8 @@
 
 -
   id: 4
+  identity_id: 4
+  lower_name: user4
   email: user4@example.com
   email_notifications_preference: onmention
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
@@ -48,6 +56,8 @@
 
 -
   id: 5
+  identity_id: 5
+  lower_name: user5
   email: user5@example.com
   email_notifications_preference: enabled
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
@@ -60,6 +70,7 @@
 
 -
   id: 6
+  identity_id: 6
   email: user6@example.com
   email_notifications_preference: enabled
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
@@ -71,6 +82,7 @@
 
 -
   id: 7
+  identity_id: 7
   email: user7@example.com
   email_notifications_preference: disabled
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
@@ -82,6 +94,7 @@
 
 -
   id: 8
+  identity_id: 8
   email: user8@example.com
   email_notifications_preference: enabled
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
@@ -94,6 +107,7 @@
 
 -
   id: 9
+  identity_id: 9
   email: user9@example.com
   email_notifications_preference: onmention
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
@@ -104,6 +118,7 @@
 
 -
   id: 10
+  identity_id: 10
   email: user10@example.com
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
   salt: ZogKvWdyEx
@@ -113,6 +128,7 @@
 
 -
   id: 11
+  identity_id: 11
   email: user11@example.com
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
   salt: ZogKvWdyEx
@@ -122,6 +138,7 @@
 
 -
   id: 12
+  identity_id: 12
   email: user12@example.com
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
   salt: ZogKvWdyEx
@@ -131,6 +148,7 @@
 
 -
   id: 13
+  identity_id: 13
   email: user13@example.com
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
   salt: ZogKvWdyEx
@@ -140,6 +158,7 @@
 
 -
   id: 14
+  identity_id: 14
   email: user14@example.com
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
   salt: ZogKvWdyEx
@@ -149,6 +168,7 @@
 
 -
   id: 15
+  identity_id: 15
   email: user15@example.com
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
   salt: ZogKvWdyEx
@@ -158,6 +178,7 @@
 
 -
   id: 16
+  identity_id: 16
   email: user16@example.com
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
   salt: ZogKvWdyEx
@@ -167,6 +188,7 @@
 
 -
   id: 17
+  identity_id: 17
   email: user17@example.com
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
   salt: ZogKvWdyEx
@@ -178,6 +200,7 @@
 
 -
   id: 18
+  identity_id: 18
   email: user18@example.com
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
   salt: ZogKvWdyEx
@@ -187,6 +210,7 @@
 
 -
   id: 19
+  identity_id: 19
   email: user19@example.com
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
   salt: ZogKvWdyEx
@@ -198,6 +222,7 @@
 
 -
   id: 20
+  identity_id: 20
   email: user20@example.com
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
   salt: ZogKvWdyEx
@@ -207,6 +232,7 @@
 
 -
   id: 21
+  identity_id: 21
   email: user21@example.com
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
   salt: ZogKvWdyEx
@@ -216,6 +242,7 @@
 
 -
   id: 22
+  identity_id: 22
   email: limited_org@example.com
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
   salt: ZogKvWdyEx
@@ -227,6 +254,7 @@
 
 -
   id: 23
+  identity_id: 23
   email: privated_org@example.com
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
   salt: ZogKvWdyEx
@@ -238,6 +266,7 @@
 
 -
   id: 24
+  identity_id: 24
   email: user24@example.com
   keep_email_private: true
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
@@ -251,6 +280,7 @@
 
 -
   id: 25
+  identity_id: 25
   email: org25@example.com
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
   salt: ZogKvWdyEx
@@ -261,6 +291,7 @@
 
 -
   id: 26
+  identity_id: 26
   email: org26@example.com
   email_notifications_preference: onmention
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
@@ -273,6 +304,7 @@
 
 -
   id: 27
+  identity_id: 27
   email: user27@example.com
   email_notifications_preference: enabled
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password
@@ -282,6 +314,7 @@
 
 -
   id: 28
+  identity_id: 28
   email: user28@example.com
   keep_email_private: true
   passwd: 7d93daa0d1e6f2305cc8fa496847d61dc7320bb16262f9c55dd753480207234cdd96a93194e408341971742f4701772a025a # password

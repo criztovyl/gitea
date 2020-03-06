@@ -18,7 +18,6 @@ import (
 	"image/png"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 	"time"
 	"unicode/utf8"
@@ -93,6 +92,8 @@ var (
 type User struct {
 	ID        int64  `xorm:"pk autoincr"`
 
+	LowerName string
+
 	// Email is the primary email address (to be used for communication)
 	Email                        string `xorm:"NOT NULL"`
 	KeepEmailPrivate             bool
@@ -153,12 +154,11 @@ type User struct {
 	Theme         string `xorm:"NOT NULL DEFAULT ''"`
 
 	IdentityId   int64 `xorm:"NOT NULL DEFAULT 0"`
-	Identity     Identity
+	Identity     *Identity `xorm:"-"`
 
 	// All attributes below have been moved to Identity and are loaded from there
 	// until everything is adjusted
 
-	LowerName string `xorm:"-"`
 	Name      string `xorm:"-"`
 	FullName  string `xorm:"-"`
 
@@ -197,7 +197,6 @@ func (u *User) BeforeUpdate() {
 		}
 	}
 
-	u.LowerName = strings.ToLower(u.Name)
 	u.Location = base.TruncateString(u.Location, 255)
 	u.Website = base.TruncateString(u.Website, 255)
 	u.Description = base.TruncateString(u.Description, 255)
@@ -209,7 +208,8 @@ func (u *User) AfterLoad() {
 		u.Theme = setting.UI.DefaultTheme
 	}
 
-	u.LowerName = u.Identity.LowerUserName
+	u.GetIdentity()
+
 	u.Name = u.Identity.UserName
 	u.FullName = u.Identity.DisplayName
 	u.Type = u.Identity.Type
@@ -330,7 +330,7 @@ func (u *User) HomeLink() string {
 
 // HTMLURL returns the user or organization's full link.
 func (u *User) HTMLURL() string {
-	return setting.AppURL + u.Name
+	return u.Identity.HTMLURL()
 }
 
 // GenerateEmailActivateCode generates an activate code based on user information and given e-mail.
@@ -395,13 +395,6 @@ func (u *User) generateRandomAvatar(e Engine) error {
 	return nil
 }
 
-// SizedRelAvatarLink returns a link to the user's avatar via
-// the local explore page. Function returns immediately.
-// When applicable, the link is for an avatar of the indicated size (in pixels).
-func (u *User) SizedRelAvatarLink(size int) string {
-	return strings.TrimRight(setting.AppSubURL, "/") + "/user/avatar/" + u.Name + "/" + strconv.Itoa(size)
-}
-
 // RealSizedAvatarLink returns a link to the user's avatar. When
 // applicable, the link is for an avatar of the indicated size (in pixels).
 //
@@ -431,20 +424,13 @@ func (u *User) RealSizedAvatarLink(size int) string {
 	return base.SizedAvatarLink(u.AvatarEmail, size)
 }
 
-// RelAvatarLink returns a relative link to the user's avatar. The link
-// may either be a sub-URL to this site, or a full URL to an external avatar
-// service.
 func (u *User) RelAvatarLink() string {
-	return u.SizedRelAvatarLink(base.DefaultAvatarSize)
+	u.GetIdentity()
+	return u.Identity.RelAvatarLink()
 }
-
-// AvatarLink returns user avatar absolute link.
 func (u *User) AvatarLink() string {
-	link := u.RelAvatarLink()
-	if link[0] == '/' && link[1] != '/' {
-		return setting.AppURL + strings.TrimPrefix(link, setting.AppSubURL)[1:]
-	}
-	return link
+	u.GetIdentity()
+	return u.Identity.AvatarLink()
 }
 
 // GetFollowers returns range of user's followers.
@@ -596,20 +582,6 @@ func (u *User) IsUserOrgOwner(orgID int64) bool {
 		return false
 	}
 	return isOwner
-}
-
-// IsUserPartOfOrg returns true if user with userID is part of the u organisation.
-func (u *User) IsUserPartOfOrg(userID int64) bool {
-	return u.isUserPartOfOrg(x, userID)
-}
-
-func (u *User) isUserPartOfOrg(e Engine, userID int64) bool {
-	isMember, err := isOrganizationMember(e, u.ID, userID)
-	if err != nil {
-		log.Error("IsOrganizationMember: %v", err)
-		return false
-	}
-	return isMember
 }
 
 // IsPublicMember returns true if user public his/her membership in given organization.
@@ -1909,3 +1881,19 @@ func SyncExternalUsers(ctx context.Context) {
 		}
 	}
 }
+
+func (u *User) getIdentity(e Engine) (err error) {
+	if u.Identity != nil && u.IdentityId == 0 {
+		return nil
+	}
+	i := new(Identity)
+	_, err = e.ID(u.IdentityId).Get(i)
+	u.Identity = i
+	return err
+}
+
+// GetOwner returns the repository owner
+func (u *User) GetIdentity() error {
+	return u.getIdentity(x)
+}
+

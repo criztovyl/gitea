@@ -15,6 +15,7 @@ import (
 	"code.gitea.io/gitea/modules/context"
 	"code.gitea.io/gitea/modules/setting"
 	"code.gitea.io/gitea/modules/util"
+	"code.gitea.io/gitea/modules/log"
 	"code.gitea.io/gitea/routers/org"
 	"code.gitea.io/gitea/routers/repo"
 )
@@ -71,6 +72,10 @@ func Profile(ctx *context.Context) {
 		return
 	}
 
+	ctxUser.GetIdentity()
+
+	log.Info("User id %d identity id %d identity %s identity user name %s", ctxUser.ID, ctxUser.IdentityId, ctxUser.Identity, ctxUser.Identity.UserName)
+
 	// Show SSH keys.
 	if isShowKeys {
 		ShowSSHKeys(ctx, ctxUser.ID)
@@ -97,7 +102,7 @@ func Profile(ctx *context.Context) {
 
 	ctx.Data["Title"] = ctxUser.DisplayName()
 	ctx.Data["PageIsUserProfile"] = true
-	ctx.Data["Owner"] = ctxUser
+	ctx.Data["Owner"] = ctxUser.Identity
 	ctx.Data["OpenIDs"] = openIDs
 	ctx.Data["EnableHeatmap"] = setting.Service.EnableUserHeatmap
 	ctx.Data["HeatmapUser"] = ctxUser.Name

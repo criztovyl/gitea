@@ -190,9 +190,9 @@ func SearchRepository(opts *SearchRepoOptions) (RepositoryList, int64, error) {
 		cond = cond.And(builder.Eq{"is_private": false})
 		accessCond := builder.Or(
 			//   A. Aren't in organisations  __OR__
-			builder.NotIn("owner_id", builder.Select("id").From("`user`").Where(builder.Eq{"type": UserTypeOrganization})),
+			builder.NotIn("owner_id", builder.Select("id").From("`identity`").Where(builder.Eq{"type": UserTypeOrganization})),
 			//   B. Isn't a private or limited organisation.
-			builder.NotIn("owner_id", builder.Select("id").From("`user`").Where(builder.Or(builder.Eq{"visibility": structs.VisibleTypeLimited}, builder.Eq{"visibility": structs.VisibleTypePrivate}))))
+			builder.NotIn("owner_id", builder.Select("id").From("`identity`").Where(builder.Or(builder.Eq{"visibility": structs.VisibleTypeLimited}, builder.Eq{"visibility": structs.VisibleTypePrivate}))))
 		cond = cond.And(accessCond)
 	}
 

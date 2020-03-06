@@ -4,18 +4,19 @@
 		<div class="ui stackable grid">
 			<div class="ui five wide column">
 				<div class="ui card">
-					{{if eq .SignedUserName .Owner.Name}}
+					<!-- FIXME for federated identities! -->
+					{{if eq .SignedUserName .Owner.UserName}}
 						<a class="image poping up" href="{{AppSubUrl}}/user/settings" id="profile-avatar" data-content="{{.i18n.Tr "user.change_avatar"}}" data-variation="inverted tiny" data-position="bottom center">
-							<img src="{{.Owner.SizedRelAvatarLink 290}}" title="{{.Owner.Name}}"/>
+							<img src="{{.Owner.SizedRelAvatarLink 290}}" title="{{.Owner.UserName}}"/>
 						</a>
 					{{else}}
 						<span class="image">
-							<img src="{{.Owner.SizedRelAvatarLink 290}}" title="{{.Owner.Name}}"/>
+							<img src="{{.Owner.SizedRelAvatarLink 290}}" title="{{.Owner.UserName}}"/>
 						</span>
 					{{end}}
 					<div class="content wrap">
-						{{if .Owner.FullName}}<span class="header text center">{{.Owner.FullName}}</span>{{end}}
-						<span class="username text center">{{.Owner.Name}}</span>
+						{{if .Owner.DisplayName}}<span class="header text center">{{.Owner.DisplayName}}</span>{{end}}
+						<span class="username text center">{{.Owner.UserName}}</span>
 					</div>
 					<div class="extra content wrap">
 						<ul class="text black">
@@ -73,14 +74,15 @@
 								{{range .Orgs}}
 									{{if (or .Visibility.IsPublic (and ($.SignedUser) (or .Visibility.IsLimited (and (.IsUserPartOfOrg $.SignedUserID) .Visibility.IsPrivate) ($.IsAdmin))))}}
 									<li>
-										<a href="{{.HomeLink}}"><img class="ui image poping up" src="{{.RelAvatarLink}}" data-content="{{.Name}}" data-position="top center" data-variation="tiny inverted"></a>
+										<a href="{{.HomeLink}}"><img class="ui image poping up" src="{{.RelAvatarLink}}" data-content="{{.UserName}}" data-position="top center" data-variation="tiny inverted"></a>
 									</li>
 									{{end}}
 								{{end}}
 								</ul>
 							</li>
 							{{end}}
-							{{if and .IsSigned (ne .SignedUserName .Owner.Name)}}
+							<!-- FIXME for federated identities -->
+							{{if and .IsSigned (ne .SignedUserName .Owner.UserName)}}
 							<li class="follow">
 								{{if .SignedUser.IsFollowing .Owner.ID}}
 								<a class="ui basic red button" href="{{.Link}}/action/unfollow?redirect_to={{$.Link}}"><i class="octicon octicon-person"></i> {{.i18n.Tr "user.unfollow"}}</a>

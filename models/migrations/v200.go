@@ -29,9 +29,9 @@ func addUserIdentityTable(x *xorm.Engine) error {
 	type User struct {
 
 		IdentityId		int64 `xorm:"NOT NULL DEFAULT 0"`
-		Identity		Identity
+		Identity		Identity `xorm:"-"`
 
-		LowerName		string	`xorm:"-"`
+		LowerName		string
 		Name			string	`xorm:"-"`
 		FullName		string	`xorm:"-"`
 
@@ -53,6 +53,6 @@ func addUserIdentityTable(x *xorm.Engine) error {
 	sess := x.NewSession()
 	defer sess.Close()
 
-	return dropTableColumns(sess, "user", "lower_name", "name", "full_name", "type", "avatar", "avatar_email", "use_custom_avatar", "visibility")
+	return dropTableColumns(sess, "user", "name", "full_name", "type", "avatar", "avatar_email", "use_custom_avatar", "visibility")
 
 }

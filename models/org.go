@@ -386,21 +386,21 @@ func CanCreateOrgRepo(orgID, uid int64) (bool, error) {
 		Exist(new(Team))
 }
 
-func getOrgsByUserID(sess *xorm.Session, userID int64, showAll bool) ([]*User, error) {
-	orgs := make([]*User, 0, 10)
+func getOrgsByUserID(sess *xorm.Session, userID int64, showAll bool) ([]*Identity, error) {
+	orgs := make([]*Identity, 0, 10)
 	if !showAll {
 		sess.And("`org_user`.is_public=?", true)
 	}
 	return orgs, sess.
 		And("`org_user`.uid=?", userID).
-		Join("INNER", "`org_user`", "`org_user`.org_id=`user`.id").
-		Asc("`user`.name").
+		Join("INNER", "`org_user`", "`org_user`.org_id=`identity`.id").
+		Asc("`identity`.user_name").
 		Find(&orgs)
 }
 
 // GetOrgsByUserID returns a list of organizations that the given user ID
 // has joined.
-func GetOrgsByUserID(userID int64, showAll bool) ([]*User, error) {
+func GetOrgsByUserID(userID int64, showAll bool) ([]*Identity, error) {
 	sess := x.NewSession()
 	defer sess.Close()
 	return getOrgsByUserID(sess, userID, showAll)
@@ -419,10 +419,14 @@ func getOwnedOrgsByUserID(sess *xorm.Session, userID int64) ([]*User, error) {
 
 // HasOrgVisible tells if the given user can see the given org
 func HasOrgVisible(org *User, user *User) bool {
+	return HasOrgIdentityVisible(org.Identity, user)
+}
+
+func HasOrgIdentityVisible(org *Identity, user *User) bool {
 	return hasOrgVisible(x, org, user)
 }
 
-func hasOrgVisible(e Engine, org *User, user *User) bool {
+func hasOrgVisible(e Engine, org *Identity, user *User) bool {
 	// Not SignedUser
 	if user == nil {
 		return org.Visibility == structs.VisibleTypePublic
@@ -439,13 +443,13 @@ func hasOrgVisible(e Engine, org *User, user *User) bool {
 }
 
 // HasOrgsVisible tells if the given user can see at least one of the orgs provided
-func HasOrgsVisible(orgs []*User, user *User) bool {
+func HasOrgsVisible(orgs []*Identity, user *User) bool {
 	if len(orgs) == 0 {
 		return false
 	}
 
 	for _, org := range orgs {
-		if HasOrgVisible(org, user) {
+		if HasOrgIdentityVisible(org, user) {
 			return true
 		}
 	}
