@@ -78,7 +78,7 @@ func SettingsPost(ctx *context.Context, form auth.UpdateOrgSettingForm) {
 	// org.LowerName = strings.ToLower(form.Name)
 
 	if ctx.User.IsAdmin {
-		org.MaxRepoCreation = form.MaxRepoCreation
+		//org.MaxRepoCreation = form.MaxRepoCreation
 	}
 
 	org.FullName = form.FullName
