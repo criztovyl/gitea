@@ -184,3 +184,21 @@ func (repo *Repository) mustOwner(e Engine) *User {
 }
 
 */
+
+func GetIdentityByLocalUserName(name string) (*Identity, error) {
+	return getIdentityByLocalUserName(x, name)
+}
+
+func getIdentityByLocalUserName(e Engine, name string) (*Identity, error){
+	if len(name) == 0 {
+		return nil, ErrIdentityNotExist{0, name, "", 0}
+	}
+	i := &Identity{UserName: strings.ToLower(name), IRI: ""}
+	has, err := e.Get(i)
+	if err != nil {
+		return nil, err
+	} else if !has {
+		return nil, ErrIdentityNotExist{0, name, "", 0}
+	}
+	return i, nil
+}

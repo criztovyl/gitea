@@ -1874,3 +1874,23 @@ func IsErrOAuthApplicationNotFound(err error) bool {
 func (err ErrOAuthApplicationNotFound) Error() string {
 	return fmt.Sprintf("OAuth application not found [ID: %d]", err.ID)
 }
+
+// Identity
+
+// ErrIdentityNotExist represents a "IdentityNotExist" kind of error.
+type ErrIdentityNotExist struct {
+	IdentityID   int64
+	Name  string
+	IRI string
+	KeyID int64
+}
+
+// IsErrIdentityNotExist checks if an error is a ErrIdentityNotExist.
+func IsErrIdentityNotExist(err error) bool {
+	_, ok := err.(ErrIdentityNotExist)
+	return ok
+}
+
+func (err ErrIdentityNotExist) Error() string {
+	return fmt.Sprintf("identity does not exist [id: %d, user_name: %s, iri: %s, keyid: %d]", err.IdentityID, err.Name, err.IRI, err.KeyID)
+}
