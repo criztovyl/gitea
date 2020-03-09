@@ -121,7 +121,7 @@ func HandleOrgAssignment(ctx *Context, args ...bool) {
 	ctx.Data["IsOrganizationMember"] = ctx.Org.IsMember
 	ctx.Data["CanCreateOrgRepo"] = ctx.Org.CanCreateOrgRepo
 
-	ctx.Org.OrgLink = setting.AppSubURL + "/org/" + org.Name
+	ctx.Org.OrgLink = setting.AppSubURL + "/org/" + org.UserName
 	ctx.Data["OrgLink"] = ctx.Org.OrgLink
 
 	// Team.
