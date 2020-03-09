@@ -35,6 +35,7 @@ func Members(ctx *context.Context) {
 		PublicOnly: true,
 	}
 
+	/*
 	if ctx.User != nil {
 		isMember, err := ctx.Org.Organization.IsOrgMember(ctx.User.ID)
 		if err != nil {
@@ -43,6 +44,7 @@ func Members(ctx *context.Context) {
 		}
 		opts.PublicOnly = !isMember && !ctx.User.IsAdmin
 	}
+	*/
 
 	total, err := models.CountOrgMembers(opts)
 	if err != nil {
@@ -53,15 +55,15 @@ func Members(ctx *context.Context) {
 	pager := context.NewPagination(int(total), setting.UI.MembersPagingNum, page, 5)
 	opts.Start = (page - 1) * setting.UI.MembersPagingNum
 	opts.Limit = setting.UI.MembersPagingNum
-	members, membersIsPublic, err := models.FindOrgMembers(opts)
+	members, _ /*membersIsPublic*/, err := models.FindOrgMembers(opts)
 	if err != nil {
 		ctx.ServerError("GetMembers", err)
 		return
 	}
 	ctx.Data["Page"] = pager
 	ctx.Data["Members"] = members
-	ctx.Data["MembersIsPublicMember"] = membersIsPublic
-	ctx.Data["MembersIsUserOrgOwner"] = members.IsUserOrgOwner(org.ID)
+	// ctx.Data["MembersIsPublicMember"] = membersIsPublic
+	// ctx.Data["MembersIsUserOrgOwner"] = members.IsUserOrgOwner(org.ID)
 	ctx.Data["MembersTwoFaStatus"] = members.GetTwoFaStatus()
 
 	ctx.HTML(200, tplMembers)

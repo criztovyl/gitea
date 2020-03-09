@@ -64,7 +64,7 @@ func (users UserList) loadOrganizationOwners(e Engine, orgID int64) (map[int64]*
 }
 
 // GetTwoFaStatus return state of 2FA enrollement
-func (users UserList) GetTwoFaStatus() map[int64]bool {
+func (users IdentityList) GetTwoFaStatus() map[int64]bool {
 	results := make(map[int64]bool, len(users))
 	for _, user := range users {
 		results[user.ID] = false //Set default to false
@@ -79,12 +79,12 @@ func (users UserList) GetTwoFaStatus() map[int64]bool {
 	return results
 }
 
-func (users UserList) loadTwoFactorStatus(e Engine) (map[int64]*TwoFactor, error) {
+func (users IdentityList) loadTwoFactorStatus(e Engine) (map[int64]*TwoFactor, error) {
 	if len(users) == 0 {
 		return nil, nil
 	}
 
-	userIDs := users.getUserIDs()
+	userIDs := users.getIdentityIDs()
 	tokenMaps := make(map[int64]*TwoFactor, len(userIDs))
 	err := e.
 		In("uid", userIDs).

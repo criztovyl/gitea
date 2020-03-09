@@ -47,6 +47,15 @@ type Identity struct {
 	NumStars     int
 	NumRepos     int
 
+	// For organization
+	NumTeams                  int
+	NumMembers                int
+	Teams                     []*Team             `xorm:"-"`
+	Members                   IdentityList        `xorm:"-"`
+	MembersIsPublic           map[int64]bool      `xorm:"-"`
+	RepoAdminChangeTeamAccess bool                `xorm:"NOT NULL DEFAULT false"`
+
+
 }
 
 /*
@@ -120,6 +129,32 @@ func (i *Identity) AvatarLink() string {
 		return setting.AppURL + strings.TrimPrefix(link, setting.AppSubURL)[1:]
 	}
 	return link
+}
+
+/*
+
+// GetUsersByIDs returns all resolved users from a list of Ids.
+func GetUsersByIDs(ids []int64) ([]*User, error) {
+	ous := make([]*User, 0, len(ids))
+	if len(ids) == 0 {
+		return ous, nil
+	}
+	err := x.In("id", ids).
+		Asc("name").
+		Find(&ous)
+	return ous, err
+}
+*/
+
+func GetIdentitiesByIDs(ids []int64) ([]*Identity, error) {
+	idts := make([]*Identity, 0, len(ids))
+	if len(ids) == 0 {
+		return idts, nil
+	}
+	err := x.In("id", ids).
+		Asc("user_name").
+		Find(&idts)
+	return idts, err
 }
 
 /*

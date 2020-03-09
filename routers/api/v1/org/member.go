@@ -10,14 +10,15 @@ import (
 
 	"code.gitea.io/gitea/models"
 	"code.gitea.io/gitea/modules/context"
-	"code.gitea.io/gitea/modules/convert"
+	// "code.gitea.io/gitea/modules/convert"
 	"code.gitea.io/gitea/modules/setting"
-	api "code.gitea.io/gitea/modules/structs"
+	// api "code.gitea.io/gitea/modules/structs"
 	"code.gitea.io/gitea/routers/api/v1/user"
 )
 
 // listMembers list an organization's members
 func listMembers(ctx *context.APIContext, publicOnly bool) {
+	/*
 	var members []*models.User
 	members, _, err := models.FindOrgMembers(models.FindOrgMembersOpts{
 		OrgID:      ctx.Org.Organization.ID,
@@ -33,6 +34,7 @@ func listMembers(ctx *context.APIContext, publicOnly bool) {
 		apiMembers[i] = convert.ToUser(member, ctx.IsSigned, ctx.User != nil && ctx.User.IsAdmin)
 	}
 	ctx.JSON(http.StatusOK, apiMembers)
+	*/
 }
 
 // ListMembers list an organization's members

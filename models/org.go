@@ -68,7 +68,7 @@ func (org *User) GetTeams() error {
 }
 
 // GetMembers returns all members of organization.
-func (org *User) GetMembers() (err error) {
+func (org *Identity) GetMembers() (err error) {
 	org.Members, org.MembersIsPublic, err = FindOrgMembers(FindOrgMembersOpts{
 		OrgID: org.ID,
 	})
@@ -93,7 +93,7 @@ func CountOrgMembers(opts FindOrgMembersOpts) (int64, error) {
 }
 
 // FindOrgMembers loads organization members according conditions
-func FindOrgMembers(opts FindOrgMembersOpts) (UserList, map[int64]bool, error) {
+func FindOrgMembers(opts FindOrgMembersOpts) (IdentityList, map[int64]bool, error) {
 	ous, err := GetOrgUsersByOrgID(opts.OrgID, opts.PublicOnly, opts.Start, opts.Limit)
 	if err != nil {
 		return nil, nil, err
@@ -106,7 +106,7 @@ func FindOrgMembers(opts FindOrgMembersOpts) (UserList, map[int64]bool, error) {
 		idsIsPublic[ou.UID] = ou.IsPublic
 	}
 
-	users, err := GetUsersByIDs(ids)
+	users, err := GetIdentitiesByIDs(ids)
 	if err != nil {
 		return nil, nil, err
 	}
