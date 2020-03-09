@@ -64,7 +64,7 @@ func HandleOrgAssignment(ctx *Context, args ...bool) {
 
 	// Force redirection when username is actually a user.
 	if !org.IsOrganization() {
-		ctx.Redirect(setting.AppSubURL + "/" + org.Name)
+		ctx.Redirect(org.HTMLURL())
 		return
 	}
 
