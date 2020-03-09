@@ -13,7 +13,7 @@ import (
 	"code.gitea.io/gitea/modules/base"
 	"code.gitea.io/gitea/modules/context"
 	"code.gitea.io/gitea/modules/log"
-	"code.gitea.io/gitea/modules/setting"
+//	"code.gitea.io/gitea/modules/setting"
 //	userSetting "code.gitea.io/gitea/routers/user/setting"
 )
 
@@ -137,6 +137,7 @@ func SettingsDelete(ctx *context.Context) {
 			return
 		}
 
+		/*
 		if err := models.DeleteOrganization(org); err != nil {
 			if models.IsErrUserOwnRepos(err) {
 				ctx.Flash.Error(ctx.Tr("form.org_still_own_repo"))
@@ -148,6 +149,8 @@ func SettingsDelete(ctx *context.Context) {
 			log.Trace("Organization deleted: %s", org.UserName)
 			ctx.Redirect(setting.AppSubURL + "/")
 		}
+		*/
+		ctx.Redirect(ctx.Org.OrgLink + "/settings/delete")
 		return
 	}
 
