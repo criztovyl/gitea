@@ -91,7 +91,7 @@ func SettingsPost(ctx *context.Context, form auth.UpdateOrgSettingForm) {
 		ctx.ServerError("UpdateIdentity", err)
 		return
 	}
-	log.Trace("Organization setting updated: %s", org.Name)
+	log.Trace("Organization setting updated: %s", org.UserName)
 	ctx.Flash.Success(ctx.Tr("org.settings.update_setting_success"))
 	ctx.Redirect(ctx.Org.OrgLink + "/settings")
 }
@@ -141,7 +141,7 @@ func SettingsDelete(ctx *context.Context) {
 				ctx.ServerError("DeleteOrganization", err)
 			}
 		} else {
-			log.Trace("Organization deleted: %s", org.Name)
+			log.Trace("Organization deleted: %s", org.UserName)
 			ctx.Redirect(setting.AppSubURL + "/")
 		}
 		return
