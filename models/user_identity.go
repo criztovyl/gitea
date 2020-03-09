@@ -217,3 +217,13 @@ func (i *Identity) GetNameForDisplay() string {
 	}
 	return i.UserName
 }
+
+func updateIdentity(e Engine, i *Identity) error {
+	_, err := e.ID(i.ID).AllCols().Update(i)
+	return err
+}
+
+// UpdateIdentity updates identity's information.
+func UpdateIdentity(i *Identity) error {
+	return updateIdentity(x, i)
+}

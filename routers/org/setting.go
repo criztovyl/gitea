@@ -87,8 +87,8 @@ func SettingsPost(ctx *context.Context, form auth.UpdateOrgSettingForm) {
 	org.Location = form.Location
 	org.Visibility = form.Visibility
 	org.RepoAdminChangeTeamAccess = form.RepoAdminChangeTeamAccess
-	if err := models.UpdateUser(org); err != nil {
-		ctx.ServerError("UpdateUser", err)
+	if err := models.UpdateIdentity(org); err != nil {
+		ctx.ServerError("UpdateIdentity", err)
 		return
 	}
 	log.Trace("Organization setting updated: %s", org.Name)
