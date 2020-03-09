@@ -31,7 +31,7 @@ const (
 	tplDashboard  base.TplName = "user/dashboard/dashboard"
 	tplIssues     base.TplName = "user/dashboard/issues"
 	tplMilestones base.TplName = "user/dashboard/milestones"
-	tplProfile    base.TplName = "user/profile"
+	tplProfile    base.TplName = "identity/profile"
 )
 
 // getDashboardContextUser finds out dashboard is viewing as which context user.
