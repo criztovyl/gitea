@@ -125,7 +125,8 @@ func HandleOrgAssignment(ctx *Context, args ...bool) {
 	ctx.Data["OrgLink"] = ctx.Org.OrgLink
 
 	// Team.
-	if ctx.Org.IsMember {
+	if ctx.Org.IsMember { // always false
+		/*
 		if ctx.Org.IsOwner {
 			if err := org.GetTeams(); err != nil {
 				ctx.ServerError("GetTeams", err)
@@ -138,6 +139,7 @@ func HandleOrgAssignment(ctx *Context, args ...bool) {
 				return
 			}
 		}
+		*/
 	}
 
 	teamName := ctx.Params(":team")
