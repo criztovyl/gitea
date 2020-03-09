@@ -76,11 +76,14 @@ func HandleOrgAssignment(ctx *Context, args ...bool) {
 		ctx.Org.IsTeamAdmin = true
 		ctx.Org.CanCreateOrgRepo = true
 	} else if ctx.IsSigned {
+		/*
 		ctx.Org.IsOwner, err = org.IsOwnedBy(ctx.User.ID)
 		if err != nil {
 			ctx.ServerError("IsOwnedBy", err)
 			return
 		}
+		*/
+		ctx.Org.IsOwner = false
 
 		if ctx.Org.IsOwner {
 			ctx.Org.IsMember = true
@@ -88,16 +91,22 @@ func HandleOrgAssignment(ctx *Context, args ...bool) {
 			ctx.Org.IsTeamAdmin = true
 			ctx.Org.CanCreateOrgRepo = true
 		} else {
+			/*
 			ctx.Org.IsMember, err = org.IsOrgMember(ctx.User.ID)
 			if err != nil {
 				ctx.ServerError("IsOrgMember", err)
 				return
 			}
+			*/
+			ctx.Org.IsMember = false
+			/*
 			ctx.Org.CanCreateOrgRepo, err = org.CanCreateOrgRepo(ctx.User.ID)
 			if err != nil {
 				ctx.ServerError("CanCreateOrgRepo", err)
 				return
 			}
+			*/
+			ctx.Org.CanCreateOrgRepo = false
 		}
 	} else {
 		// Fake data.
