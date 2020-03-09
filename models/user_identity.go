@@ -227,3 +227,7 @@ func updateIdentity(e Engine, i *Identity) error {
 func UpdateIdentity(i *Identity) error {
 	return updateIdentity(x, i)
 }
+
+func (i *Identity) IsPublicMember(orgID int64) bool {
+	return true
+}
