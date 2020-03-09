@@ -202,3 +202,8 @@ func getIdentityByLocalUserName(e Engine, name string) (*Identity, error){
 	}
 	return i, nil
 }
+
+// IsOrganization returns true if identity is actually a organization.
+func (i *Identity) IsOrganization() bool {
+	return i.Type == UserTypeOrganization
+}
