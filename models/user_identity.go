@@ -49,6 +49,19 @@ type Identity struct {
 
 }
 
+/*
+Todo
+- CustomAvatar
+- Followers (Local+Remote)
+- IsOrganization
+- IsPublicMember
+- GetOrganizationCount (<-> User@org.Members)
+- Get{,Org,Mirror}Repositories (<-> Repository.Owner)
+- Get{,Owned}Organizations
+- GitName (?)
+- ShortName (?)
+*/
+
 func (i *Identity) BeforeUpdate() {
 	i.LowerUserName = strings.ToLower(i.UserName)
 }

@@ -323,15 +323,19 @@ func (u *User) DashboardLink() string {
 	return setting.AppSubURL + "/"
 }
 
+// User or Identity? Both?
 // HomeLink returns the user or organization home page link.
 func (u *User) HomeLink() string {
 	return setting.AppSubURL + "/" + u.Name
 }
 
+// User or Identity? Both?
 // HTMLURL returns the user or organization's full link.
 func (u *User) HTMLURL() string {
 	return u.Identity.HTMLURL()
 }
+
+// Only User
 
 // GenerateEmailActivateCode generates an activate code based on user information and given e-mail.
 func (u *User) GenerateEmailActivateCode(email string) string {
@@ -348,6 +352,8 @@ func (u *User) GenerateEmailActivateCode(email string) string {
 func (u *User) GenerateActivateCode() string {
 	return u.GenerateEmailActivateCode(u.Email)
 }
+
+// Identity too (?)
 
 // CustomAvatarPath returns user custom avatar file path.
 func (u *User) CustomAvatarPath() string {
@@ -458,6 +464,8 @@ func (u *User) GetFollowing(page int) ([]*User, error) {
 	return users, sess.Find(&users)
 }
 
+// Only User(?)
+
 // NewGitSig generates and returns the signature of given user.
 func (u *User) NewGitSig() *git.Signature {
 	return &git.Signature{
@@ -466,6 +474,8 @@ func (u *User) NewGitSig() *git.Signature {
 		When:  time.Now(),
 	}
 }
+
+// Only user
 
 func hashPassword(passwd, salt, algo string) string {
 	var tempPasswd []byte
