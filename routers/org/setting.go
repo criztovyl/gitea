@@ -126,7 +126,7 @@ func SettingsDelete(ctx *context.Context) {
 	ctx.Data["Title"] = ctx.Tr("org.settings")
 	ctx.Data["PageIsSettingsDelete"] = true
 
-	org := ctx.Org.Organization
+	// org := ctx.Org.Organization
 	if ctx.Req.Method == "POST" {
 		if _, err := models.UserSignIn(ctx.User.Name, ctx.Query("password")); err != nil {
 			if models.IsErrUserNotExist(err) {
