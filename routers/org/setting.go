@@ -81,7 +81,7 @@ func SettingsPost(ctx *context.Context, form auth.UpdateOrgSettingForm) {
 		//org.MaxRepoCreation = form.MaxRepoCreation
 	}
 
-	org.FullName = form.FullName
+	org.DisplayName = form.FullName
 	org.Description = form.Description
 	org.Website = form.Website
 	org.Location = form.Location
