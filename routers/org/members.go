@@ -97,19 +97,23 @@ func MembersAction(ctx *context.Context) {
 			ctx.Error(404)
 			return
 		}
+		/*
 		err = org.RemoveMember(uid)
 		if models.IsErrLastOrgOwner(err) {
 			ctx.Flash.Error(ctx.Tr("form.last_org_owner"))
 			ctx.Redirect(ctx.Org.OrgLink + "/members")
 			return
 		}
+		*/
 	case "leave":
+		/*
 		err = org.RemoveMember(ctx.User.ID)
 		if models.IsErrLastOrgOwner(err) {
 			ctx.Flash.Error(ctx.Tr("form.last_org_owner"))
 			ctx.Redirect(ctx.Org.OrgLink + "/members")
 			return
 		}
+		*/
 	}
 
 	if err != nil {
