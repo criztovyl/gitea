@@ -207,3 +207,13 @@ func getIdentityByLocalUserName(e Engine, name string) (*Identity, error){
 func (i *Identity) IsOrganization() bool {
 	return i.Type == UserTypeOrganization
 }
+
+// DisplayName returns full name if it's not empty,
+// returns username otherwise.
+func (i *Identity) GetNameForDisplay() string {
+	trimmed := strings.TrimSpace(i.DisplayName)
+	if len(trimmed) > 0 {
+		return trimmed
+	}
+	return i.UserName
+}

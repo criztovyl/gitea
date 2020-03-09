@@ -32,7 +32,7 @@ func Home(ctx *context.Context) {
 		return
 	}
 
-	ctx.Data["Title"] = org.DisplayName()
+	ctx.Data["Title"] = org.GetNameForDisplay()
 
 	var orderBy models.SearchOrderBy
 	ctx.Data["SortType"] = ctx.Query("sort")
