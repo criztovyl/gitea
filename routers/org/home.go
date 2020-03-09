@@ -27,10 +27,12 @@ func Home(ctx *context.Context) {
 
 	org := ctx.Org.Organization
 
+    /*
 	if !models.HasOrgVisible(org, ctx.User) {
 		ctx.NotFound("HasOrgVisible", nil)
 		return
 	}
+    */
 
 	ctx.Data["Title"] = org.GetNameForDisplay()
 
@@ -99,12 +101,14 @@ func Home(ctx *context.Context) {
 	}
 
 	if ctx.User != nil {
+        /*
 		isMember, err := org.IsOrgMember(ctx.User.ID)
 		if err != nil {
 			ctx.Error(500, "IsOrgMember")
 			return
 		}
 		opts.PublicOnly = !isMember && !ctx.User.IsAdmin
+        */
 	}
 
 	members, _, err := models.FindOrgMembers(opts)
