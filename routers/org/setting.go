@@ -6,7 +6,7 @@
 package org
 
 import (
-	"strings"
+//	"strings"
 
 	"code.gitea.io/gitea/models"
 	"code.gitea.io/gitea/modules/auth"
@@ -49,6 +49,7 @@ func SettingsPost(ctx *context.Context, form auth.UpdateOrgSettingForm) {
 	org := ctx.Org.Organization
 
 	// Check if organization name has been changed.
+	/*
 	if org.LowerName != strings.ToLower(form.Name) {
 		isExist, err := models.IsUserExist(org.ID, form.Name)
 		if err != nil {
@@ -71,9 +72,10 @@ func SettingsPost(ctx *context.Context, form auth.UpdateOrgSettingForm) {
 		ctx.Org.OrgLink = setting.AppSubURL + "/org/" + form.Name
 		log.Trace("Organization name changed: %s -> %s", org.Name, form.Name)
 	}
+	*/
 	// In case it's just a case change.
-	org.Name = form.Name
-	org.LowerName = strings.ToLower(form.Name)
+	org.UserName = form.Name
+	// org.LowerName = strings.ToLower(form.Name)
 
 	if ctx.User.IsAdmin {
 		org.MaxRepoCreation = form.MaxRepoCreation
