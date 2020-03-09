@@ -34,7 +34,7 @@ const (
 // Teams render teams list page
 func Teams(ctx *context.Context) {
 	org := ctx.Org.Organization
-	ctx.Data["Title"] = org.FullName
+	ctx.Data["Title"] = org.DisplayName
 	ctx.Data["PageIsOrgTeams"] = true
 
 	for _, t := range org.Teams {
@@ -179,7 +179,7 @@ func TeamsRepoAction(ctx *context.Context) {
 
 // NewTeam render create new team page
 func NewTeam(ctx *context.Context) {
-	ctx.Data["Title"] = ctx.Org.Organization.FullName
+	ctx.Data["Title"] = ctx.Org.Organization.DisplayName
 	ctx.Data["PageIsOrgTeams"] = true
 	ctx.Data["PageIsOrgTeamsNew"] = true
 	ctx.Data["Team"] = &models.Team{}
@@ -189,7 +189,7 @@ func NewTeam(ctx *context.Context) {
 
 // NewTeamPost response for create new team
 func NewTeamPost(ctx *context.Context, form auth.CreateTeamForm) {
-	ctx.Data["Title"] = ctx.Org.Organization.FullName
+	ctx.Data["Title"] = ctx.Org.Organization.DisplayName
 	ctx.Data["PageIsOrgTeams"] = true
 	ctx.Data["PageIsOrgTeamsNew"] = true
 	ctx.Data["Units"] = models.Units
@@ -237,7 +237,7 @@ func NewTeamPost(ctx *context.Context, form auth.CreateTeamForm) {
 		}
 		return
 	}
-	log.Trace("Team created: %s/%s", ctx.Org.Organization.Name, t.Name)
+	log.Trace("Team created: %s/%s", ctx.Org.Organization.DisplayName, t.Name)
 	ctx.Redirect(ctx.Org.OrgLink + "/teams/" + t.LowerName)
 }
 
@@ -267,7 +267,7 @@ func TeamRepositories(ctx *context.Context) {
 
 // EditTeam render team edit page
 func EditTeam(ctx *context.Context) {
-	ctx.Data["Title"] = ctx.Org.Organization.FullName
+	ctx.Data["Title"] = ctx.Org.Organization.DisplayName
 	ctx.Data["PageIsOrgTeams"] = true
 	ctx.Data["team_name"] = ctx.Org.Team.Name
 	ctx.Data["desc"] = ctx.Org.Team.Description
@@ -278,7 +278,7 @@ func EditTeam(ctx *context.Context) {
 // EditTeamPost response for modify team information
 func EditTeamPost(ctx *context.Context, form auth.CreateTeamForm) {
 	t := ctx.Org.Team
-	ctx.Data["Title"] = ctx.Org.Organization.FullName
+	ctx.Data["Title"] = ctx.Org.Organization.DisplayName
 	ctx.Data["PageIsOrgTeams"] = true
 	ctx.Data["Team"] = t
 	ctx.Data["Units"] = models.Units
