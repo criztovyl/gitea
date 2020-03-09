@@ -14,7 +14,7 @@ import (
 	"code.gitea.io/gitea/modules/context"
 	"code.gitea.io/gitea/modules/log"
 	"code.gitea.io/gitea/modules/setting"
-	userSetting "code.gitea.io/gitea/routers/user/setting"
+//	userSetting "code.gitea.io/gitea/routers/user/setting"
 )
 
 const (
@@ -98,21 +98,25 @@ func SettingsPost(ctx *context.Context, form auth.UpdateOrgSettingForm) {
 
 // SettingsAvatar response for change avatar on settings page
 func SettingsAvatar(ctx *context.Context, form auth.AvatarForm) {
+	/*
 	form.Source = auth.AvatarLocal
 	if err := userSetting.UpdateAvatarSetting(ctx, form, ctx.Org.Organization); err != nil {
 		ctx.Flash.Error(err.Error())
 	} else {
 		ctx.Flash.Success(ctx.Tr("org.settings.update_avatar_success"))
 	}
+	*/
 
 	ctx.Redirect(ctx.Org.OrgLink + "/settings")
 }
 
 // SettingsDeleteAvatar response for delete avatar on setings page
 func SettingsDeleteAvatar(ctx *context.Context) {
+	/*
 	if err := ctx.Org.Organization.DeleteAvatar(); err != nil {
 		ctx.Flash.Error(err.Error())
 	}
+	*/
 
 	ctx.Redirect(ctx.Org.OrgLink + "/settings")
 }
