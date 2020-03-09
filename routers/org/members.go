@@ -22,7 +22,7 @@ const (
 // Members render organization users page
 func Members(ctx *context.Context) {
 	org := ctx.Org.Organization
-	ctx.Data["Title"] = org.FullName
+	ctx.Data["Title"] = org.DisplayName
 	ctx.Data["PageIsOrgMembers"] = true
 
 	page := ctx.QueryInt("page")
